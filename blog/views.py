@@ -8,7 +8,11 @@ def home (request):
     return render(request,'index.html', context)
 
 def policia (request):
-    nome = Categoria.objects.order_by('id')
-    context = {'nome': nome}
+    noticias = Noticia.objects.order_by('id')
+    context = {'categorias': noticias}
     return render(request, 'policia.html', context)
 
+def esporte (request):
+    noticias = Noticia.objects.order_by('id')
+    context = {'categorias': noticias}
+    return render(request, 'esporte.html', context)
