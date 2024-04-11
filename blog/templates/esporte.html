@@ -1,5 +1,25 @@
-{% extends 'bade.html' %}
+{% extends 'base.html' %}
 
 {% block conteudo %}
-
+<div class="container">
+  <div class="row">
+    {% for noticia in noticias %}
+    <div class="col-md-4 p-2">
+      <div class="card mb-3">
+        {% load static %}
+        <img src="{% static 'campo.png' %}" class="card-img-top" alt="Imagem de ilustração">
+        <div class="card-body">
+          <h5 class="card-title">{{ noticia.nome }}</h5>
+          <p class="card-text">{{ noticia.corpo }}</p>
+          <a href="#" class="btn btn-primary">Ler mais</a>
+        </div>
+      </div>
+    </div>
+    {% empty %}
+    <div class="col">
+      <p>Não há registro.</p>
+    </div>
+    {% endfor %}
+  </div>
+</div>
 {% endblock conteudo %}
