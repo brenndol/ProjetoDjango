@@ -33,3 +33,8 @@ def politica (request):
     noticias_politica = Noticia.objects.filter(categoria=categoria_politica)
     context = {'noticias': noticias_politica}
     return render(request, 'politica.html', context)
+
+def politica_id (request,id_p):
+    noticias_politica = Noticia.objects.get(id=id_p)
+    context = {'noticias': noticias_politica}
+    return render(request, 'politica.html', context)
