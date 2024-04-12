@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from blog.models import Noticia, Categoria
-
+from blog.forms import NoticiaForm
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 def home(request):
     # Recupera todas as notícias de cada categoria
     todas_noticias_policia = Noticia.objects.filter(categoria__nome='Polícia')
@@ -38,3 +40,14 @@ def politica_id (request,id_p):
     noticias_politica = Noticia.objects.get(id=id_p)
     context = {'noticias': noticias_politica}
     return render(request, 'politica.html', context)
+
+def formulario (request):
+    if request.method != 'POST':
+        form = NoticiaForm()
+    else:
+        form = NoticiaForm(request.POST)
+        if form.is_valid():
+            form.save()
+        return HttpResponseRedirect(reverse('home'))
+    context = {'form': form}
+    return render(request, 'form.html', context)

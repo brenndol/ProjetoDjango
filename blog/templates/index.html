@@ -7,7 +7,7 @@
       
       {% for noticia in todas_noticias_policia %}
       {% load static %}
-        <img src="{% static 'viatura.png' %}" class="card-img-top" alt="Imagem de ilustração">
+        <img src="{% static noticia.imagem %}" class="card-img-top" alt="Imagem de ilustração">
       <div class="card mb-3">
         <div class="card-body">
           <h5 class="card-title">{{ noticia.nome }}</h5>
@@ -24,7 +24,7 @@
     
       {% for noticia in todas_noticias_esporte %}
       {% load static %}
-        <img src="{% static 'campo.png' %}" class="card-img-top" alt="Imagem de ilustração">
+        <img src="{% static noticia.imagem %}" class="card-img-top" alt="Imagem de ilustração">
       <div class="card mb-3">
         <div class="card-body">
           <h5 class="card-title">{{ noticia.nome }}</h5>
@@ -40,7 +40,7 @@
       {% for noticia in todas_noticias_politica %}
       {% load static %}
       <div class="col-md-4 p-2">
-        <img src="{% static 'politica\image.png' %}" class="card-img-top" alt="Imagem de ilustração">
+        <img src="{% static noticia.imagem %}" class="card-img-top" alt="Imagem de ilustração">
       <div class="card mb-3">
         <div class="card-body">
           <h5 class="card-title">{{ noticia.nome }}</h5>
