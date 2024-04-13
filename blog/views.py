@@ -1,26 +1,23 @@
-from django.shortcuts import render
-from blog.models import Noticia, Categoria
+from django.shortcuts import render, get_object_or_404
+from blog.models import Noticia, Categoria, Corpo
 from blog.forms import NoticiaForm
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+
+
 def home(request):
-    # Recupera todas as notícias de cada categoria
-    todas_noticias_policia = Noticia.objects.filter(categoria__nome='Polícia')
-    todas_noticias_esporte = Noticia.objects.filter(categoria__nome='Esporte')
-    todas_noticias_politica = Noticia.objects.filter(categoria__nome='Política')
+    todas_noticias = Noticia.objects.all().order_by('-data')
+    todas_corpos = Corpo.objects.all()
 
-    context = {
-        'todas_noticias_policia': todas_noticias_policia,
-        'todas_noticias_esporte': todas_noticias_esporte,
-        'todas_noticias_politica': todas_noticias_politica,
-    }
-
+    context = {'todas_noticias': todas_noticias,
+               'todos_corpos': todas_corpos}
+    
     return render(request, 'index.html', context)
 
 
 def policia(request):
-    categoria_policia = Categoria.objects.get(nome='Polícia')
-    noticias_policia = Noticia.objects.filter(categoria=categoria_policia)
+    categoria_policia = get_object_or_404(Categoria, nome='Polícia')
+    noticias_policia = Noticia.objects.filter(categoria=categoria_policia).order_by('-data')
     context = {'noticias': noticias_policia}
     return render(request, 'policia.html', context)
 
@@ -30,11 +27,16 @@ def esporte(request):
     context = {'noticias': noticias_policia}
     return render(request, 'esporte.html', context)
 
-def politica (request):
-    categoria_politica = Categoria.objects.get(nome='Política')
-    noticias_politica = Noticia.objects.filter(categoria=categoria_politica)
+def politica(request):
+    try:
+        categoria_politica = Categoria.objects.get(nome='Política')
+    except Categoria.MultipleObjectsReturned:
+        categoria_politica = Categoria.objects.filter(nome='Política').first()
+
+    noticias_politica = Noticia.objects.filter(categoria=categoria_politica).order_by('-data')
     context = {'noticias': noticias_politica}
     return render(request, 'politica.html', context)
+
 
 def politica_id (request,id_p):
     noticias_politica = Noticia.objects.get(id=id_p)

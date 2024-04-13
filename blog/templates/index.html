@@ -3,56 +3,27 @@
 {% block conteudo %}
 <div class="container">
   <div class="row">
+    {% for noticia in todas_noticias %}
     <div class="col-md-4 p-2">
-      
-      {% for noticia in todas_noticias_policia %}
+      {% for imagem in noticia.imagem_set.all %}
       {% load static %}
-        <img src="{% static noticia.imagem %}" class="card-img-top" alt="Imagem de ilustração">
-      <div class="card mb-3">
-        <div class="card-body">
-          <h5 class="card-title">{{ noticia.nome }}</h5>
-          <p class="card-text">{{ noticia.corpo |truncatechars:450 }}</p>
-          <a href="" class="btn btn-primary">Ler mais</a>
-
-        </div>
-      </div>
-      {% empty %}
-      <p>Não há notícias de Polícia.</p>
+        <img src="{% static imagem.nome %}" class="card-img-top img-fluid" alt="Imagem de ilustração">
       {% endfor %}
-    </div>
-    <div class="col-md-4 p-2">
-    
-      {% for noticia in todas_noticias_esporte %}
-      {% load static %}
-        <img src="{% static noticia.imagem %}" class="card-img-top" alt="Imagem de ilustração">
       <div class="card mb-3">
         <div class="card-body">
           <h5 class="card-title">{{ noticia.nome }}</h5>
-          <p class="card-text">{{ noticia.corpo }}</p>
-          <a href="" class="btn btn-primary">Ler mais</a>
-        </div>
-      </div>
-      {% empty %}
-      <p>Não há notícias de Esporte.</p>
-      {% endfor %}
-    </div>
-      
-      {% for noticia in todas_noticias_politica %}
-      {% load static %}
-      <div class="col-md-4 p-2">
-        <img src="{% static noticia.imagem %}" class="card-img-top" alt="Imagem de ilustração">
-      <div class="card mb-3">
-        <div class="card-body">
-          <h5 class="card-title">{{ noticia.nome }}</h5>
-          <p class="card-text">{{ noticia.corpo }}</p>
+          <div class="card-text" style="max-height: 200px; overflow-y: auto;">
+          {% for corpo in noticia.corpo_set.all %}
+              <p>{{ corpo.corpo }}</p>
+          {% endfor %}  
+          </div>
           <a href="" class="btn btn-primary">Ler mais</a>
         </div>
       </div>
     </div>
-
-      {% empty %}
-      <p>Não há notícias de Política.</p>
-      {% endfor %}
+  {% empty %}
+    <p>Não há notícias.</p>
+  {% endfor %}
   </div>
 </div>
 {% endblock conteudo %}
