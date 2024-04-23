@@ -1,6 +1,9 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from blog.models import Noticia, Categoria, Corpo
-from blog.forms import NoticiaForm
+from blog.forms import ComentarioForm, ContatoForm
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth import login, logout
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 
@@ -45,11 +48,67 @@ def politica_id (request,id_p):
 
 def formulario (request):
     if request.method != 'POST':
-        form = NoticiaForm()
+        form = ContatoForm()
     else:
-        form = NoticiaForm(request.POST)
+        form = ContatoForm(request.POST)
         if form.is_valid():
             form.save()
         return HttpResponseRedirect(reverse('home'))
     context = {'form': form}
     return render(request, 'form.html', context)
+
+def destaques (request):
+    categorias = Categoria.objects.all()
+    destaques = {}
+    for categoria in categorias:
+        noticia = Noticia.objects.filter(categoria=categoria).first()
+        if noticia:
+            destaques[categoria.nome] = noticia
+
+    context = {'destaques': destaques}
+    return render(request, 'destaques.html', context)
+
+def detalhes_noticia (request, noticia_id):
+    noticia = get_object_or_404(Noticia, pk=noticia_id)
+    comentarios = noticia.comentario_set.all()
+
+    if request.method == 'POST':
+        if request.user.is_authenticated:
+            form = ComentarioForm(request.POST)
+            if form.is_valid():
+                comentario = form.save(commit=False)
+                comentario.noticia = noticia
+                comentario.usuario = request.user
+                comentario.save()
+                return redirect(reverse('detalhes_noticia', noticia_id=noticia_id))
+        else:
+            return redirect('login')
+    else:
+        form = ComentarioForm()
+    return render(request, 'detalhes_noticia.html', {'noticia': noticia, 'comentarios': comentarios, 'form': form})
+
+
+def cadastro_usuario (request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('login')
+    else:
+        form = UserCreationForm()
+        return render(request, 'cadastro_usuario.html', {'form': form})
+    
+def login_usuario (request):
+    if request.method == 'POST':
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            return redirect('home')
+    else:
+        form = AuthenticationForm()
+    return render(request, 'login.html', {'form': form})
+
+def logout_usuario (request):
+    logout(request)
+    return render(request, 'logout.html')

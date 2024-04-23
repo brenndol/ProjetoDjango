@@ -3,29 +3,28 @@
 {% block conteudo %}
 <div class="container">
   <div class="row">
-    {% for noticia in todas_noticias %}
+    {% for categoria, noticia in destaques.items %}
     <div class="col-md-4 p-2">
-      <div class="card h-100">
-      {% for imagem in noticia.imagem_set.all %}
-      {% load static %}
+      <div class="card mb-3 h-100">
+        {% load static %}
+        {% for imagem in noticia.imagem_set.all %}
         <img src="{% static imagem.nome %}" class="card-img-top img-fluid" alt="Imagem de ilustração">
-      {% endfor %}
-      <div class="card mb-3">
+        {% endfor %}
         <div class="card-body">
           <h5 class="card-title">{{ noticia.nome }}</h5>
           <div class="card-text" style="max-height: 200px; overflow-y: auto;">
-          {% for corpo in noticia.corpo_set.all %}
-              <p>{{ corpo.corpo }}</p>
-          {% endfor %}  
+          {% for corpo in noticia.corpo_set.all %}  
+            <p>{{ corpo.corpo }}</p>
+          {% endfor %}
           </div>
-          <a href="{% url 'detalhes_noticia' noticia.id %}" class="btn btn-primary">Ler mais</a>
+          <a href="#" class="btn btn-primary">Ler mais</a>
         </div>
       </div>
-      </div>
     </div>
-  {% empty %}
-    <p>Não há notícias.</p>
-  {% endfor %}
+    {% empty %}
+      <p>Não há destaques disponíveis.</p>
+    </div>
+    {% endfor %}
   </div>
 </div>
 {% endblock conteudo %}
