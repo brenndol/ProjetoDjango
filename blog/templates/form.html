@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block conteudo %} 
+
+<form action="{% url 'form' %}" method="post">
+    {% csrf_token %}
+    {{form}}
+    <button>Adicionar Notícia</button>
+</form>
+
+
+{% block conteudo %}
