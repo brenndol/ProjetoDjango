@@ -1,12 +1,44 @@
 {% extends 'base.html' %}
 
 {% block conteudo %} 
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="text-center">Entre em Contato</h2>
+                </div>
+                <div class="card-body">
+                    <form action="{% url 'contato' %}" method="post">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="nome" class="form-label">Nome:</label>
+                            <input type="text" class="form-control" id="nome" name="nome" placeholder="Seu nome" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="telefone" class="form-label">Telefone:</label>
+                            <input type="tel" class="form-control" id="telefone" name="telefone" placeholder="Seu telefone" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email:</label>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Seu email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="assunto" class="form-label">Assunto:</label>
+                            <input type="text" class="form-control" id="assunto" name="assunto" placeholder="Assunto da mensagem" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="mensagem" class="form-label">Mensagem:</label>
+                            <textarea class="form-control" id="mensagem" name="mensagem" rows="5" placeholder="Sua mensagem" required></textarea>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary">Enviar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
 
-<form action="{% url 'form' %}" method="post">
-    {% csrf_token %}
-    {{form}}
-    <button>Adicionar Notícia</button>
-</form>
-
-
-{% block conteudo %}

@@ -7,10 +7,16 @@
     <div class="col-md-4 p-2">
       <div class="card mb-3">
         {% load static %}
-        <img src="{% static 'image.png' %}" class="card-img-top" alt="Imagem de ilustração">
+        {% for imagem in noticia.imagem_set.all %}
+        <img src="{% static imagem.nome %}" class="card-img-top" alt="Imagem de ilustração">
+        {% endfor %}
         <div class="card-body">
           <h5 class="card-title">{{ noticia.nome }}</h5>
-          <p class="card-text">{{ noticia.corpo }}</p>
+          <div class="card-text" style="max-height: 200px; overflow-y: auto;">
+          {% for corpo in noticia.corpo_set.all %}  
+            <p>{{ corpo.corpo }}</p>
+          {% endfor %}
+          </div>
           <a href="#" class="btn btn-primary">Ler mais</a>
         </div>
       </div>
