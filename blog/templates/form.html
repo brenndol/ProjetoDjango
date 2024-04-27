@@ -1,34 +1,40 @@
 {% extends 'base.html' %}
 
-{% block conteudo %} 
+{% block conteudo %}
 <div class="container">
     <div class="row">
-        <div class="col-md-6 offset-md-3">
-            <h2>Entre em Contato</h2>
-            <form action="{% url 'contato' %}" method="post">
-                {% csrf_token %}
-                <div class="form-group">
-                    {{ form.nome.label_tag }}
-                    {{ form.nome }}
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-header">
+                    <h2>Entre em Contato</h2>
                 </div>
-                <div class="form-group">
-                    {{ form.telefone.label_tag }}
-                    {{ form.telefone }}
+                <div class="card-body">
+                    <form action="{% url 'contato' %}" method="post">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="nome" class="form-label">Nome:</label>
+                            <input type="text" class="form-control" id="nome" name="nome">
+                        </div>
+                        <div class="mb-3">
+                            <label for="telefone" class="form-label">Telefone:</label>
+                            <input type="text" class="form-control" id="telefone" name="telefone">
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email:</label>
+                            <input type="email" class="form-control" id="email" name="email">
+                        </div>
+                        <div class="mb-3">
+                            <label for="assunto" class="form-label">Assunto:</label>
+                            <input type="text" class="form-control" id="assunto" name="assunto">
+                        </div>
+                        <div class="mb-3">
+                            <label for="mensagem" class="form-label">Mensagem:</label>
+                            <textarea class="form-control" id="mensagem" name="mensagem"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Enviar</button>
+                    </form>
                 </div>
-                <div class="form-group">
-                    {{ form.email.label_tag }}
-                    {{ form.email }}
-                </div>
-                <div class="form-group">
-                    {{ form.assunto.label_tag }}
-                    {{ form.assunto }}
-                </div>
-                <div class="form-group">
-                    {{ form.mensagem.label_tag }}
-                    {{ form.mensagem }}
-                </div>
-                <button type="submit" class="btn btn-primary">Enviar</button>
-            </form>
+            </div>
         </div>
     </div>
 </div>

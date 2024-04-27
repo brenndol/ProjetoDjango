@@ -13,9 +13,9 @@
         <div class="card-body">
           <h5 class="card-title">{{ noticia.nome }}</h5>
           <div class="card-text" style="max-height: 200px; overflow-y: auto;">
-          {% for corpo in noticia.corpo_set.all %}  
+            {% for corpo in noticia.corpo_set.all %}
             <p>{{ corpo.corpo }}</p>
-          {% endfor %}
+            {% endfor %}
           </div>
           <a href="#" class="btn btn-primary">Ler mais</a>
         </div>

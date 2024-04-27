@@ -6,7 +6,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-
+from django.contrib.auth.hashers import make_password
 
 def home(request):
     todas_noticias = Noticia.objects.all().order_by('-data')
@@ -112,3 +112,16 @@ def login_usuario (request):
 def logout_usuario (request):
     logout(request)
     return render(request, 'logout.html')
+
+def cadastrousuario(request):
+    if request.method == "POST":
+        form = cadastro_usuario(request.POST)
+        if form.is_valid():
+            if request.POST.get('password')!= request.POST.get('confirmação'):
+                format.add_error('password','as senhas devem ser iguais')
+        else:
+            form = form.save(commit=False)
+            form.password = make_password(form.password)
+            form.save()
+    return HttpResponseRedirect(reverse('index'))
+    

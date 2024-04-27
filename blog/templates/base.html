@@ -73,11 +73,12 @@
         <h1>Bahia News</h1>
     </div>
 
-    <nav class="navbar p-0 navbar-expand-md bg-body-tertiary">
+    <nav class="navbar p-0 navbar-expand-md bg-body-tertiary" data-bs-theme="dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="{% url 'home' %}">Início</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler border-white" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+                aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
@@ -99,8 +100,9 @@
                     </li>
                 </ul>
                 <form class="d-flex">
-                    <input class="form-control me-2" type="search" placeholder="Pesquise aqui" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Buscar</button>
+                    <input class="form-control me-2 bg-white border-white text-black" type="search"
+                        placeholder="Pesquise aqui" aria-label="Search">
+                    <button class="btn border rounded border-white text-white" type="submit">Buscar</button>
                 </form>
             </div>
         </div>
@@ -114,4 +116,5 @@
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
 </body>
+
 </html>
