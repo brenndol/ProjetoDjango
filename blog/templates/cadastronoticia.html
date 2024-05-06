@@ -3,21 +3,21 @@
 {% block conteudo %} 
 <div class="container">
     <div class="row">
-        <div class="col-md-6 offset-md-3">
-            <h2>Entre em Contato</h2>
-            <form action="{% url 'contato' %}" method="post">
+        <div class="col-md-6 offset-md-3 my-2">
+            <h2>CADASTRAR NOTÍCIA</h2>
+            <form action="{% url 'cadastronoticia' %}" method="post">
                 {% csrf_token %}
+                <div class="form-group my-2">
+                    {{ form.categoria }}
+                </div>
                 <div class="form-group my-2">
                     {{ form.nome }}
                 </div>
                 <div class="form-group my-2">
-                    {{ form.email }}
+                    {{ form.corpo }}
                 </div>
                 <div class="form-group my-2">
-                    {{ form.assunto }}
-                </div>
-                <div class="form-group my-2">
-                    {{ form.mensagem }}
+                    {{ form.imagem }}
                 </div>
                 <button type="submit" class="btn btn-primary">Enviar</button>
             </form>

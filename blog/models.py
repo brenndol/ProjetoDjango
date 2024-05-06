@@ -34,7 +34,7 @@ class Imagem (models.Model):
         return self.nome
 
 class Comentario (models.Model):
-    corpo = models.CharField(max_length=50)
+    corpo = models.CharField(max_length=500)
     data = models.DateTimeField(auto_now_add=True)
     noticia = models.ForeignKey("Noticia", on_delete=models.CASCADE)
     usuario = models.ForeignKey("Usuario", on_delete=models.CASCADE)
@@ -48,5 +48,13 @@ class Usuario (models.Model):
     def __str__(self):
         return self.nome
 
+class Contato (models.Model):
+    nome = models.CharField(max_length=30)
+    assunto = models.CharField(max_length=30)
+    email = models.CharField(max_length=20)
+    mensagem = models.TextField()
+
+    def __strf__(self):
+        return self.nome
 
 

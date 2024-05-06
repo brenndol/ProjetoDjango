@@ -1,26 +1,31 @@
 {% extends 'base.html' %}
 
 {% block conteudo %}
-    <div class="container mt-4">
+    <div class="container mt-4 text-black">
         <h1> {{ noticia.nome }} </h1>
         <p> {{ noticia.data }} </p>
         <p> {{ noticia.categoria }} </p>
         
         {% load static %}
         {% for imagem in noticia.imagem_set.all %}
-            <img src="{% static imagem.nome %}" alt="Imagem ilustrativa" class="rounded mx-auto d-block" class="img-fluid" style="max-width: 100%;">
+            <img src="{% static imagem.nome %}" alt="{{noticia.nome}}" class="rounded mx-auto d-block" class="img-fluid" style="max-width: 100%;">
         {% endfor %}
 
-    <div class="mb-4"></div>
+        <div class="mb-4"></div>
         {% for corpo in noticia.corpo_set.all %}
             <p> {{ corpo.corpo }} </p>
         {% endfor %}
     </div>
-
+    
     <form method="post" class="mb-5">
         {% csrf_token %}
         <textarea name="comentario" class="form-control mb-4" placeholder="Deixe seu comentário aqui"></textarea>
-        <button type="submit" class="btn btn-primary">Enviar Comentário</button>
+        {% if user.is_authenticated %}
+            <button type="submit" class="btn btn-primary">Enviar</button>
+        {% else %}
+            <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-cadastro"> Cadastre-se para publicar </a>
+            <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-login"> Login  </a>
+        {% endif %}
     </form>
 
     <h3>Comentários:</h3>
@@ -36,10 +41,10 @@
                 {% else %}
                     <p>{{ comentario.corpo }}</p>
                 {% endif %}
-                    <p class="text-muted">Enviado em: {{ comentario.data }}</p>
+                <p class="text-muted">Enviado em: {{ comentario.data }}</p>
             </div>
-            {% empty %}
-                <p>Ainda não há comentários para esta notícia.</p>
-            {% endfor %}
         </div>
-{% endblock conteudo %}
+    {% empty %}
+        <p>Ainda não há comentários para esta notícia.</p>
+    {% endfor %}
+{% endblock %}

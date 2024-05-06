@@ -5,19 +5,21 @@
   <div class="row">
     {% for noticia in noticias %}
     <div class="col-md-4 p-2">
-      <div class="card mb-3">
-        {% load static %}
-        {% for imagem in noticia.imagem_set.all %}
-        <img src="{% static imagem.nome %}" class="card-img-top" alt="Imagem de ilustração">
-        {% endfor %}
-        <div class="card-body">
-          <h5 class="card-title">{{ noticia.nome }}</h5>
-          <div class="card-text" style="max-height: 200px; overflow-y: auto;">
+      {% for imagem in noticia.imagem_set.all %}
+      {% load static %}
+      <div class="w-100 img-wrapper" style="height: 35%;">
+          <img src="{% static imagem.nome %}" class="card-img-top w-100 h-100" style="object-fit:cover;" alt="{{noticia.titulo}}">
+          {% endfor %}
+      </div>
+        <div class="card-mb-3" style="height: 65%; max-height: 100%;">
+          <div class="card-body d-flex flex-column align-items-center">
+          <h5 class="card-title my-2 w-100 fs-6 fw-semibold" style="height:10%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ noticia.nome }}</h5>
+          <div class="card-text" style="max-height: 230px; overflow: hidden; text-overflow: ellipsis;">
           {% for corpo in noticia.corpo_set.all %}  
             <p>{{ corpo.corpo }}</p>
           {% endfor %}
           </div>
-          <a href="#" class="btn btn-primary">Ler mais</a>
+          <a href="{% url 'detalhes_noticia' noticia.id %}" class="btn btn-primary mt-5 w-50">Ler mais</a>
         </div>
       </div>
     </div>
