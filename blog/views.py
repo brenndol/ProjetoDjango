@@ -162,6 +162,7 @@ def cadastronoticia (request):
 
     if request.method == 'POST':
         form = NoticiaForm(request.POST)
+        print("form", form)
         if form.is_valid():
             form.save()
             return redirect('home')  
