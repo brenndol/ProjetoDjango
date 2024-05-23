@@ -4,13 +4,13 @@
 <div class="container">
   <div class="row">
     {% for noticia in todas_noticias %}
-    <div class="col-md-4 p-2">
-      {% for imagem in noticia.imagem_set.all %}
-      {% load static %}
-      <div class="w-100 img-wrapper" style="height: 35%;">
-          <img src="{% static imagem.nome %}" class="card-img-top w-100 h-100" style="object-fit:cover;" alt="{{ noticia.titulo }}">
-          {% endfor %}
-      </div>
+      <div class="col-md-4 p-2">
+        {% for imagem in noticia.imagem_set.all %}
+          {% load static %}
+          <div class="w-100 img-wrapper" style="height: 35%;">
+            <img src="{% static imagem.nome %}" class="card-img-top w-100 h-100" style="object-fit:cover;" alt="{{ noticia.titulo }}">
+          </div>
+        {% endfor %}
         <div class="card mb-3" style="height: 65%; max-height: 100%;">
           <div class="card-body d-flex flex-column align-items-center">
           <h5 class="card-title m-0 w-100 fs-6 fw-semibold" style="height:10%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ noticia.nome }}</h5>
@@ -21,8 +21,8 @@
           </div>
           <a href="{% url 'detalhes_noticia' noticia.id %}" class="btn btn-primary w-50 mt-5">Ler mais</a>
         </div>
+        </div>
       </div>
-    </div>
     {% endfor %}
   </div>
 </div>
