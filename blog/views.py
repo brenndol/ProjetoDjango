@@ -96,12 +96,15 @@ def detalhes_noticia (request, noticia_id):
     if request.method == 'POST':
         if request.user.is_authenticated:
             form = ComentarioForm(request.POST)
-            if form.is_valid():
-                comentario = form.save(commit=False)
-                comentario.noticia = noticia
-                comentario.usuario = request.user
-                comentario.save()
-                return redirect(reverse('detalhes_noticia', kwargs={'noticia_id': noticia_id}))
+         
+            comentario = form.save(commit=False)
+            comentario.noticia = noticia
+            comentario.usuario = request.user
+            print("noticia",noticia)
+            print("request.user",request.user)
+            print("comentario",comentario)
+            comentario.save()
+            return redirect(reverse('detalhes_noticia', kwargs={'noticia_id': noticia_id}))
         else:
             return redirect('login')
     else:
@@ -164,8 +167,13 @@ def cadastronoticia (request):
         form = NoticiaForm(request.POST)
         print("form", form)
         if form.is_valid():
-            form.save()
-            return redirect('home')  
+            noti = form.save(commit=False)
+            noti.save()  
+            corpo_texto = request.POST.get('corpo')  # Obtendo o corpo do texto
+            ordem = 1  # definir a ordem de acordo com a lógica necessária
+            Corpo.objects.create(corpo=corpo_texto, ordem=ordem, noticia=noti)
+            
+        return redirect('home')  
     else:
         form = NoticiaForm()
 
